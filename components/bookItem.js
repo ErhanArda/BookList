@@ -1,18 +1,20 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, Touchable, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux' ;
+import { Card } from './common';
+import *  as actions from '../actions';
 
-import { Card } from './common'
+class BookItem extends Component {
+    render() {
 
-class BookItem extends Component{
-    render(){
-
-        const{  book } = this.props;
-        return(
-            <Card>
-            <Text style={styles.titleStyle}>{book.title}</Text>
-            <Text style={styles.authorStyle}>{book.author}</Text>
-
-        </Card>
+        const { book } = this.props;
+        return (
+            <TouchableOpacity onPress={() => this.props.selectBook(book)}>
+                <Card>
+                    <Text style={styles.titleStyle}>{book.title}</Text>
+                    <Text style={styles.authorStyle}>{book.author}</Text>
+                </Card>
+            </TouchableOpacity>
         )
     }
 }
@@ -21,10 +23,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'black'
     },
-    authorStyle:{
-        fontSize:13,
-        color:'grey',
+    authorStyle: {
+        fontSize: 13,
+        color: 'grey',
     }
 });
 
-export default BookItem;
+export default connect(null,actions) (BookItem);
