@@ -1,14 +1,16 @@
 import React from 'react';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList,StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 import { Card } from '.'
 
 class BookList extends React.Component {
 
-    renderItem({ item }) {
+    myRenderItem({ item }) {
         return (
             <Card>
-                <Text>{item.title}</Text>
+                <Text style={styles.titleStyle}>{item.title}</Text>
+                <Text style={styles.authorStyle}>{item.author}</Text>
+
             </Card>
         )
     }
@@ -19,7 +21,7 @@ class BookList extends React.Component {
             <View>
                 <FlatList
                     data={books}
-                    renderItem={this.renderItem}
+                    renderItem={this.myRenderItem}
                     keyExtractor={(item) => item.isbn} />
             </View>
         )
@@ -32,5 +34,16 @@ const mapStateToProps = state => {
         books: state.books
     }
 }
+
+const styles = StyleSheet.create({
+    titleStyle: {
+        fontSize: 16,
+        color: 'black'
+    },
+    authorStyle:{
+        fontSize:13,
+        color:'grey',
+    }
+});
 
 export default connect(mapStateToProps)(BookList);
